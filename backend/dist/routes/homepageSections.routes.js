@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const homepageSections_controller_1 = require("../controllers/homepageSections.controller");
+const validateRequest_1 = require("../middleware/validateRequest");
+const homepageSections_schemas_1 = require("../validators/homepageSections.schemas");
+const router = (0, express_1.Router)();
+router.post("/", (0, validateRequest_1.validateRequest)(homepageSections_schemas_1.createHomepageSectionSchema), homepageSections_controller_1.createSection);
+router.put("/:id", (0, validateRequest_1.validateRequest)(homepageSections_schemas_1.updateHomepageSectionSchema), homepageSections_controller_1.updateSection);
+router.delete("/:id", (0, validateRequest_1.validateRequest)(homepageSections_schemas_1.deleteHomepageSectionSchema), homepageSections_controller_1.deleteSection);
+exports.default = router;

@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const paymentGateways_controller_1 = require("../controllers/paymentGateways.controller");
+const middleware_1 = require("../middleware");
+const validateRequest_1 = require("../middleware/validateRequest");
+const paymentGateways_schemas_1 = require("../validators/paymentGateways.schemas");
+const router = (0, express_1.Router)();
+router.get("/", paymentGateways_controller_1.list);
+router.put("/:id/toggle", ...middleware_1.adminMiddleware, (0, validateRequest_1.validateRequest)(paymentGateways_schemas_1.toggleGatewaySchema), paymentGateways_controller_1.toggle);
+router.put("/:id", ...middleware_1.adminMiddleware, (0, validateRequest_1.validateRequest)(paymentGateways_schemas_1.updateGatewaySchema), paymentGateways_controller_1.update);
+exports.default = router;

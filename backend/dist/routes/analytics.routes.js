@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const analytics_controller_1 = require("../controllers/analytics.controller");
+const middleware_1 = require("../middleware");
+const validateRequest_1 = require("../middleware/validateRequest");
+const analytics_schemas_1 = require("../validators/analytics.schemas");
+const router = (0, express_1.Router)();
+router.get("/overview", ...middleware_1.staffMiddleware, analytics_controller_1.overview);
+router.get("/sales", ...middleware_1.staffMiddleware, (0, validateRequest_1.validateRequest)(analytics_schemas_1.salesSeriesSchema), analytics_controller_1.sales);
+router.get("/revenue", ...middleware_1.staffMiddleware, (0, validateRequest_1.validateRequest)(analytics_schemas_1.revenueSeriesSchema), analytics_controller_1.revenue);
+router.get("/top-products", ...middleware_1.staffMiddleware, (0, validateRequest_1.validateRequest)(analytics_schemas_1.topProductsSchema), analytics_controller_1.topProducts);
+exports.default = router;

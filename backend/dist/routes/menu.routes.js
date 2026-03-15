@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const menu_controller_1 = require("../controllers/menu.controller");
+const middleware_1 = require("../middleware");
+const validateRequest_1 = require("../middleware/validateRequest");
+const menu_schemas_1 = require("../validators/menu.schemas");
+const router = (0, express_1.Router)();
+router.get("/", menu_controller_1.list);
+router.get("/:slug", (0, validateRequest_1.validateRequest)(menu_schemas_1.menuSlugSchema), menu_controller_1.getBySlug);
+router.post("/", ...middleware_1.adminMiddleware, (0, validateRequest_1.validateRequest)(menu_schemas_1.createMenuSchema), menu_controller_1.create);
+router.put("/:id", ...middleware_1.adminMiddleware, (0, validateRequest_1.validateRequest)(menu_schemas_1.updateMenuSchema), menu_controller_1.update);
+router.delete("/:id", ...middleware_1.adminMiddleware, (0, validateRequest_1.validateRequest)(menu_schemas_1.menuIdSchema), menu_controller_1.remove);
+router.post("/:id/items", ...middleware_1.adminMiddleware, (0, validateRequest_1.validateRequest)(menu_schemas_1.createMenuItemSchema), menu_controller_1.addItem);
+router.put("/items/:itemId", ...middleware_1.adminMiddleware, (0, validateRequest_1.validateRequest)(menu_schemas_1.updateMenuItemSchema), menu_controller_1.updateItem);
+router.delete("/items/:itemId", ...middleware_1.adminMiddleware, (0, validateRequest_1.validateRequest)(menu_schemas_1.menuItemIdSchema), menu_controller_1.removeItem);
+router.put("/:id/items/reorder", ...middleware_1.adminMiddleware, (0, validateRequest_1.validateRequest)(menu_schemas_1.reorderMenuItemsSchema), menu_controller_1.reorder);
+exports.default = router;

@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const coupon_controller_1 = require("../controllers/coupon.controller");
+const middleware_1 = require("../middleware");
+const validateRequest_1 = require("../middleware/validateRequest");
+const coupon_schemas_1 = require("../validators/coupon.schemas");
+const router = (0, express_1.Router)();
+router.get("/", ...middleware_1.adminMiddleware, coupon_controller_1.list);
+router.post("/", ...middleware_1.adminMiddleware, (0, validateRequest_1.validateRequest)(coupon_schemas_1.createCouponSchema), coupon_controller_1.create);
+router.put("/:id", ...middleware_1.adminMiddleware, (0, validateRequest_1.validateRequest)(coupon_schemas_1.updateCouponSchema), coupon_controller_1.update);
+router.delete("/:id", ...middleware_1.adminMiddleware, (0, validateRequest_1.validateRequest)(coupon_schemas_1.couponIdSchema), coupon_controller_1.remove);
+exports.default = router;

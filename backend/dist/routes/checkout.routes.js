@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const checkout_controller_1 = require("../controllers/checkout.controller");
+const middleware_1 = require("../middleware");
+const validateRequest_1 = require("../middleware/validateRequest");
+const checkout_schemas_1 = require("../validators/checkout.schemas");
+const router = (0, express_1.Router)();
+router.get("/summary", middleware_1.authMiddleware, checkout_controller_1.summary);
+router.post("/", middleware_1.authMiddleware, (0, validateRequest_1.validateRequest)(checkout_schemas_1.checkoutSchema), checkout_controller_1.placeOrder);
+exports.default = router;

@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const marketing_controller_1 = require("../controllers/marketing.controller");
+const middleware_1 = require("../middleware");
+const validateRequest_1 = require("../middleware/validateRequest");
+const marketing_schemas_1 = require("../validators/marketing.schemas");
+const router = (0, express_1.Router)();
+router.get("/public", marketing_controller_1.listEnabled);
+router.get("/", ...middleware_1.adminMiddleware, marketing_controller_1.list);
+router.put("/:provider", ...middleware_1.adminMiddleware, (0, validateRequest_1.validateRequest)(marketing_schemas_1.updateMarketingSchema), marketing_controller_1.update);
+exports.default = router;

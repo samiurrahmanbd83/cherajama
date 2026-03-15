@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const media_controller_1 = require("../controllers/media.controller");
+const middleware_1 = require("../middleware");
+const validateRequest_1 = require("../middleware/validateRequest");
+const media_schemas_1 = require("../validators/media.schemas");
+const router = (0, express_1.Router)();
+router.get("/", ...middleware_1.staffMiddleware, (0, validateRequest_1.validateRequest)(media_schemas_1.mediaListSchema), media_controller_1.list);
+router.post("/upload", ...middleware_1.staffMiddleware, middleware_1.mediaUpload.array("media", 10), media_controller_1.upload);
+router.delete("/:id", ...middleware_1.staffMiddleware, (0, validateRequest_1.validateRequest)(media_schemas_1.mediaIdSchema), media_controller_1.remove);
+exports.default = router;

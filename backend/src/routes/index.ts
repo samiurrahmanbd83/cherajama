@@ -1,0 +1,60 @@
+import { Router } from "express";
+import authRoutes from "./auth.routes";
+import adminAuthRoutes from "./adminAuth.routes";
+import categoryRoutes from "./category.routes";
+import cartRoutes from "./cart.routes";
+import checkoutRoutes from "./checkout.routes";
+import healthRoutes from "./health.routes";
+import paymentRoutes from "./payment.routes";
+import productRoutes from "./product.routes";
+import orderRoutes from "./order.routes";
+import couponRoutes from "./coupon.routes";
+import mediaRoutes from "./media.routes";
+import menuRoutes from "./menu.routes";
+import homepageRoutes from "./homepage.routes";
+import homepagesRoutes from "./homepages.routes";
+import homepageSectionsRoutes from "./homepageSections.routes";
+import seoRoutes from "./seo.routes";
+import settingsRoutes from "./settings.routes";
+import analyticsRoutes from "./analytics.routes";
+import marketingRoutes from "./marketing.routes";
+import chatRoutes from "./chat.routes";
+import announcementRoutes from "./announcement.routes";
+import paymentGatewaysRoutes from "./paymentGateways.routes";
+import uploadRoutes from "./upload.routes";
+import reviewAdminRoutes from "./reviewAdmin.routes";
+import adminUsersRoutes from "./adminUsers.routes";
+import { adminAuthMiddleware } from "../middleware";
+
+// Aggregate API routes
+const router = Router();
+
+router.use("/health", healthRoutes);
+router.use("/auth", authRoutes);
+router.use("/admin", adminAuthRoutes);
+// Protect all admin API routes beneath /admin
+router.use("/admin", adminAuthMiddleware);
+router.use("/cart", cartRoutes);
+router.use("/checkout", checkoutRoutes);
+router.use("/categories", categoryRoutes);
+router.use("/payments", paymentRoutes);
+router.use("/products", productRoutes);
+router.use("/orders", orderRoutes);
+router.use("/coupons", couponRoutes);
+router.use("/media", mediaRoutes);
+router.use("/menus", menuRoutes);
+router.use("/homepage", homepageRoutes);
+router.use("/admin/homepage", homepageSectionsRoutes);
+router.use("/upload", uploadRoutes);
+router.use("/admin/reviews", reviewAdminRoutes);
+router.use("/admin/users", adminUsersRoutes);
+router.use("/homepages", homepagesRoutes);
+router.use("/seo", seoRoutes);
+router.use("/settings", settingsRoutes);
+router.use("/analytics", analyticsRoutes);
+router.use("/marketing", marketingRoutes);
+router.use("/chat", chatRoutes);
+router.use("/announcement", announcementRoutes);
+router.use("/payment-gateways", paymentGatewaysRoutes);
+
+export default router;

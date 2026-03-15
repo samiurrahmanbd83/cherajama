@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const seo_controller_1 = require("../controllers/seo.controller");
+const middleware_1 = require("../middleware");
+const validateRequest_1 = require("../middleware/validateRequest");
+const seo_schemas_1 = require("../validators/seo.schemas");
+const router = (0, express_1.Router)();
+router.get("/sitemap.xml", seo_controller_1.sitemap);
+router.get("/site", seo_controller_1.getSite);
+router.get("/:entity_type/:entity_id", (0, validateRequest_1.validateRequest)(seo_schemas_1.seoEntitySchema), seo_controller_1.getSeo);
+router.put("/site", ...middleware_1.adminMiddleware, (0, validateRequest_1.validateRequest)(seo_schemas_1.seoSiteUpsertSchema), seo_controller_1.upsertSite);
+router.put("/:entity_type/:entity_id", ...middleware_1.adminMiddleware, (0, validateRequest_1.validateRequest)(seo_schemas_1.upsertSeoEntitySchema), seo_controller_1.upsertEntitySeo);
+exports.default = router;

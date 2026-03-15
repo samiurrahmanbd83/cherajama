@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const homepage_controller_1 = require("../controllers/homepage.controller");
+const validateRequest_1 = require("../middleware/validateRequest");
+const homepage_schemas_1 = require("../validators/homepage.schemas");
+const router = (0, express_1.Router)();
+router.get("/", homepage_controller_1.getActive);
+router.get("/:slug", (0, validateRequest_1.validateRequest)(homepage_schemas_1.homepageSlugSchema), homepage_controller_1.getBySlug);
+exports.default = router;

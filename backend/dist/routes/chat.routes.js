@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const chat_controller_1 = require("../controllers/chat.controller");
+const middleware_1 = require("../middleware");
+const validateRequest_1 = require("../middleware/validateRequest");
+const chat_schemas_1 = require("../validators/chat.schemas");
+const router = (0, express_1.Router)();
+router.get("/", chat_controller_1.getChatSettings);
+router.put("/", ...middleware_1.adminMiddleware, (0, validateRequest_1.validateRequest)(chat_schemas_1.updateChatButtonsSchema), chat_controller_1.updateChatSettings);
+exports.default = router;

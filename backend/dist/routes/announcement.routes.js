@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const announcement_controller_1 = require("../controllers/announcement.controller");
+const middleware_1 = require("../middleware");
+const validateRequest_1 = require("../middleware/validateRequest");
+const announcement_schemas_1 = require("../validators/announcement.schemas");
+const router = (0, express_1.Router)();
+router.get("/", announcement_controller_1.getLatest);
+router.post("/", ...middleware_1.adminMiddleware, (0, validateRequest_1.validateRequest)(announcement_schemas_1.createAnnouncementSchema), announcement_controller_1.create);
+router.put("/:id", ...middleware_1.adminMiddleware, (0, validateRequest_1.validateRequest)(announcement_schemas_1.updateAnnouncementSchema), announcement_controller_1.update);
+router.put("/toggle", ...middleware_1.adminMiddleware, (0, validateRequest_1.validateRequest)(announcement_schemas_1.toggleAnnouncementSchema), announcement_controller_1.toggle);
+exports.default = router;
